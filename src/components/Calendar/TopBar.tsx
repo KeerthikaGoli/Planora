@@ -20,7 +20,7 @@ interface TopBarProps {
 const TopBar: React.FC<TopBarProps> = ({
   darkMode,
   currentDate,
-  today,
+  today: _today,
   searchQuery,
   selectedCategory,
   onToggleSidebar,
@@ -33,37 +33,63 @@ const TopBar: React.FC<TopBarProps> = ({
 }) => {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   return (
-    <div className={`app-panel elevated border border-app border-t-0 -mt-px mb-4 md:mb-6 overflow-visible`}>
-      <div className={`p-2 md:p-6 bg-gray-900 text-white`}>
-        {/* Mobile compact header: icons only */}
-        <div className="md:hidden flex items-center justify-between mb-2">
-          <button onClick={onToggleSidebar} className="p-2 hover:bg-gray-800/40 rounded-lg transition" title="Menu">
-            <Menu className="w-6 h-6 text-gray-200" />
-          </button>
-          <div className="flex items-center gap-1.5">
-            <button onClick={() => setShowMobileSearch(!showMobileSearch)} className="p-2 hover:bg-gray-800/40 rounded-lg transition" title="Search">
-              <Search className="w-5 h-5 text-gray-200" />
-            </button>
-            <button onClick={onToggleDarkMode} className="p-2 hover:bg-gray-800/40 rounded-lg transition" title="Theme">
-              {darkMode ? <Sun className="w-5 h-5 text-gray-200" /> : <Moon className="w-5 h-5" />}
-            </button>
-            <button onClick={onAddEvent} className="p-2 btn-accent rounded-lg transition-all duration-200 flex items-center justify-center elevated" title="Add Event">
-              <Plus className="w-4 h-4" />
-            </button>
+    <div className={`app-panel elevated border border-app border-t-0 -mt-px mb-2 md:mb-6 overflow-visible`}>
+      <div className={`p-2 md:p-6 bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 text-white`}>
+        {/* Mobile header with Planora heading */}
+        <div className="md:hidden">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <button onClick={onToggleSidebar} className="p-2 hover:bg-gray-800/40 rounded-lg transition" title="Menu">
+                <Menu className="w-6 h-6 text-gray-200" />
+              </button>
+              <div>
+                <h1 className={`text-xl font-semibold ${darkMode ? 'planora-gradient' : 'text-white'}`}>Planora</h1>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <button onClick={() => setShowMobileSearch(!showMobileSearch)} className="p-2 hover:bg-gray-800/40 rounded-lg transition" title="Search">
+                <Search className="w-5 h-5 text-gray-200" />
+              </button>
+              <button onClick={onToggleDarkMode} className="p-2 hover:bg-gray-800/40 rounded-lg transition" title="Theme">
+                {darkMode ? <Sun className="w-5 h-5 text-gray-200" /> : <Moon className="w-5 h-5" />}
+              </button>
+              <button onClick={onAddEvent} className="p-2 btn-accent rounded-lg transition-all duration-200 flex items-center justify-center elevated" title="Add Event">
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+          
+          {/* Mobile: category buttons centered in header */}
+          <div className="flex md:hidden justify-center gap-1.5 mb-2 flex-wrap">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                onClick={() => onCategoryChange(cat)}
+                className={`px-2 py-1 rounded-md text-xs font-semibold transition-all duration-200 capitalize border 
+                  ${selectedCategory === cat 
+                    ? 'btn-accent border-accent' 
+                    : 'bg-gray-800/60 text-gray-200 hover:bg-gray-700 border-gray-700'}`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
 
         {showMobileSearch && (
           <div className="md:hidden mb-2">
             <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-accent/80" />
-              <input
-                type="text"
-                placeholder="Search events..."
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                className={`w-full pl-10 pr-3 py-2 rounded-lg transition-all border text-sm ${darkMode ? 'bg-gray-700 text-accent placeholder-accent/50 border-gray-700' : 'bg-white/90 text-gray-800 placeholder-gray-500 border-gray-200'}`}
-              />
+            <Search className={`w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 ${darkMode ? 'text-white' : 'text-black'}`} />
+            <Search className={`w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 ${darkMode ? 'text-white' : 'text-black'}`} />
+            <input
+              type="text"
+              placeholder="Search events..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className={`w-full pl-10 pr-3 py-2 rounded-lg transition-all border text-sm ${darkMode ? 'bg-gray-700 text-white placeholder-white/70 border-purple-500/50 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30' : 'bg-white text-black placeholder-black border-gray-200'}`}
+            />
+
+
             </div>
           </div>
         )}
@@ -74,7 +100,7 @@ const TopBar: React.FC<TopBarProps> = ({
                 <Menu className="w-6 h-6 text-gray-200" />
               </button>
               <div>
-                <h1 className={`text-white text-2xl md:text-3xl font-semibold`}>Planora</h1>
+                <h1 className={`text-2xl md:text-3xl font-semibold ${darkMode ? 'planora-gradient' : 'text-white'}`}>Planora</h1>
                 <p className="text-xs md:text-sm opacity-80 mt-1 text-gray-200">Manage your schedule efficiently</p>
               </div>
             </div>
@@ -99,13 +125,13 @@ const TopBar: React.FC<TopBarProps> = ({
         {/* Search and Filters */}
         <div className="flex flex-wrap gap-2 md:gap-3">
           <div className="hidden md:block flex-1 min-w-56 md:min-w-64 relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-accent/80" />
+          <Search className={`w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 ${darkMode ? 'text-white' : 'text-gray-700'}`}/>
             <input
               type="text"
               placeholder="Search events..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className={`w-full pl-10 pr-3 py-2 md:py-2.5 rounded-lg transition-all border text-sm md:text-base ${darkMode ? 'bg-gray-700 text-accent placeholder-accent/50 border-gray-700' : 'bg-white/90 text-gray-800 placeholder-gray-500 border-gray-200'}`}
+              className={`w-full pl-10 pr-3 py-2 md:py-2.5 rounded-lg transition-all border text-sm md:text-base ${darkMode ? 'bg-gray-700 text-white placeholder-white/70 border-purple-500/50 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30' : 'bg-white/90 text-gray-800 placeholder-gray-500 border-gray-200'}`}
             />
           </div>
           
@@ -124,24 +150,11 @@ const TopBar: React.FC<TopBarProps> = ({
               </button>
             ))}
           </div>
-
-          {/* Mobile: category select */}
-          <div className="flex md:hidden w-full sm:w-auto relative z-10">
-            <select
-              value={selectedCategory}
-              onChange={(e) => onCategoryChange(e.target.value)}
-              className={`w-auto max-w-[180px] px-3 py-2 rounded-md border text-sm ${darkMode ? 'bg-gray-700 text-gray-200 border-gray-600' : 'bg-white text-gray-800 border-gray-300'}`}
-            >
-              {CATEGORIES.map(cat => (
-                <option key={cat} value={cat} className="capitalize">{cat}</option>
-              ))}
-            </select>
-          </div>
         </div>
       </div>
 
       {/* Calendar Navigation */}
-      <div className={`p-4 md:p-6 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+      <div className={`p-3 md:p-6 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
         <div className="flex items-center justify-between">
           <button
             onClick={() => onNavigateMonth(-1)}
