@@ -1,215 +1,157 @@
+# Planora — Elegant Calendar & Scheduling App
 
+An elegant, interactive, and fully responsive React + TypeScript calendar application built with Vite and Tailwind CSS. Planora helps users plan, manage, and visualize events with a minimal UI, keyboard shortcuts, conflict detection, and a compact sidebar for quick navigation.
 
-```markdown
-# 📅 Calendar Web App
-
-A modern and interactive **Calendar Web Application** built with **React**, **TypeScript**, **Tailwind CSS**, and **Vite**.  
-This project provides users with a beautiful, fast, and functional interface to manage and visualize events efficiently.
+Live demo: https://adorable-daifuku-e8a303.netlify.app/
 
 ---
 
-## 🌐 Live Demo
+## Key Features
 
-👉 **Try it here:** [Calendar Web App](https://adorable-daifuku-e8a303.netlify.app/)
-
----
-
-
----
-
-## 🚀 Features
-
-### 🗓️ 1. Interactive Calendar View
-The core interface allows users to easily navigate between months, weeks, and days.  
-- Displays all days dynamically with a highlighted “Today” view.  
-- Reusable components like `CalendarContainer`, `CalendarDay`, and `CalendarSidebar` ensure scalability.  
-- Smooth month transitions with subtle animations for better UX.  
+- Interactive monthly calendar view with per-day event cards and hover tooltips.
+- Add / edit / delete events via a modal with fields for title, description, date, time, category and color.
+- Sidebar with mini calendar, event counts for the month, and upcoming events.
+- Conflict detection for overlapping events.
+- Keyboard shortcuts for fast navigation and quick event creation.
+- Splash screen shown during initialization.
+- Responsive layout and dark/light theme support.
+- Lightweight animations for smooth UX.
 
 ---
 
-### 📝 2. Event Management (Add / Edit / Delete)
-Users can add, edit, or delete events directly from the calendar.  
-- Clicking on a date opens a **modal popup** (`CalendarModal.tsx`) to manage events.  
-- Input fields for title, description, and time.  
-- Real-time updates after adding or editing events.  
-- Clean and minimal interface for quick scheduling.  
+## Features (Detailed)
 
----
+### Interactive Calendar View
+- Clean monthly grid with current-day highlight and responsive cells.
+- Navigate months using UI arrows or keyboard shortcuts.
+- Search bar to find events by title/description.
+- Filters for categories: All, Meeting, Planning, Review, Presentation.
+- Add events by double-clicking a date or using the floating Add button.
 
-### 📚 3. Sidebar Navigation
-Quick month and year navigation through the sidebar.  
-- Implemented via `CalendarSidebar.tsx` and `MiniCalendar.tsx`.  
-- Provides a compact monthly view for date selection.  
-- Could be extended with filters (e.g., Work, Personal events).  
+### Sidebar Quick View
+- Mini calendar for quick navigation.
+- Monthly statistics and event breakdown by category.
+- Upcoming events list with date/time and brief details.
+- Clicking a date in the sidebar focuses the main calendar.
 
----
+### Event Management
+- Modal form for add/edit including validation and conflict checks.
+- Inline edit/delete options in selected-day panel and event tooltip.
+- Instant UI updates when events change.
 
-### 🎞️ 4. Smooth Animations
-Visually pleasing transitions for a better user experience.  
-- Managed using `CalendarAnimation.tsx`.  
-- Smooth effects for opening modals and switching months.  
+### Event Tooltip
+- Hover reveals event title, time, and short description.
 
----
+### Animations & Splash Screen
+- Subtle transitions for month changes and modal open/close.
+- Branded splash screen while app initializes.
 
-### 💬 5. Event Tooltip
-Quick preview of event details without opening a modal.  
-- Hovering over an event displays a tooltip (`CalendarTooltip.tsx`) showing title, description, and time.  
-
----
-
-### 💻 6. Responsive & Minimal UI
-Designed to look perfect on all screen sizes.  
-- Built with **Tailwind CSS** for adaptive and responsive design.  
-- Works seamlessly across desktop, tablet, and mobile screens.  
-- Minimal layout with consistent color and spacing schemes.  
-
----
-
-### 🕐 7. Splash Screen
-Displays a sleek loading animation when the app starts.  
-- Implemented using `SplashScreen.tsx`.  
-- Enhances first impression and preloads essential assets.  
-
----
-
-### 🧩 8. TypeScript-Powered Codebase
-Ensures clean, type-safe, and maintainable development.  
-- Type definitions for events, dates, and states.  
-- Prevents runtime errors and improves code reliability.  
-
----
-
-### ⚡ 9. Fast and Lightweight Setup
-Developed using **Vite** for superior performance.  
-- Instant startup with Hot Module Replacement (HMR).  
-- Optimized build output and lightning-fast reloads.  
-- Perfect for rapid development and deployment.  
-
----
-
-### ⌨️ 8. Keyboard Shortcuts
-Boosts productivity and makes navigation faster.  
-
+### Keyboard Shortcuts
 | Shortcut | Action |
-|-----------|--------|
-| ← / → | Navigate to previous / next month |
-| **T** | Jump to today’s date |
-| **N** | Create a new event |
-| **Double-click on a date** | Add a new event directly on that date |
-
-*(All shortcuts implemented inside `CalendarContainer.tsx`)*  
+|---:|:---|
+| ← / → | Navigate previous/next month |
+| T | Jump to today |
+| N | Open new event modal |
+| Double-click date | Add new event on that date |
 
 ---
 
-## 🧱 Folder Structure
+## Tech Stack
 
-```
-
-calendar-app/
-├── public/
-│   ├── favicon.svg
-│   ├── logo.svg
-│   └── vite.svg
-│
-├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── Calendar/
-│   │   │   ├── CalendarContainer.tsx
-│   │   │   ├── CalendarDay.tsx
-│   │   │   ├── CalendarSidebar.tsx
-│   │   │   ├── CalendarModal.tsx
-│   │   │   ├── CalendarTooltip.tsx
-│   │   │   ├── MiniCalendar.tsx
-│   │   │   ├── CalendarAnimation.tsx
-│   │   │   ├── TopBar.tsx
-│   │   │   └── index.ts
-│   │   ├── Layout/
-│   │   ├── UI/
-│   │   ├── Logo.tsx
-│   │   └── SplashScreen.tsx
-│   ├── pages/
-│   ├── hooks/
-│   ├── utils/
-│   ├── constants/
-│   ├── types/
-│   ├── context/
-│   ├── App.tsx
-│   ├── main.tsx
-│   ├── App.css
-│   └── index.css
-│
-├── .eslintrc.cjs
-├── tailwind.config.js
-├── postcss.config.js
-├── tsconfig.json
-├── vite.config.ts
-├── package.json
-└── README.md
-
-````
+- Frontend: React + TypeScript
+- Bundler: Vite
+- Styling: Tailwind CSS
+- Animations: Framer Motion / CSS Transitions (optional)
+- State: React hooks (local state)
+- Deployment: Netlify (example)
 
 ---
 
-## 🧠 Tech Stack
+## Getting Started
 
-| Category | Technologies |
-|-----------|--------------|
-| **Frontend** | React (TypeScript) |
-| **Styling** | Tailwind CSS |
-| **Build Tool** | Vite |
-| **State Management** | React Hooks / Context |
-| **Language** | TypeScript |
+Prerequisites: Node.js (recommended >= 18), npm.
 
----
-
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/your-username/calendar-app.git
-cd calendar-app
-````
-
-### 2️⃣ Install Dependencies
+Clone, install and run:
 
 ```bash
+git clone https://github.com/<your-username>/planora.git
+cd planora
 npm install
-```
-
-### 3️⃣ Run the App
-
-```bash
 npm run dev
 ```
 
-Visit ➡️ `http://localhost:5173`
+Open http://localhost:5173
 
+Build for production:
 
----
+```bash
+npm run build
+npm run preview
+```
 
-## 🧑‍💻 Contributing
+Lint:
 
-1. Fork the repository
-2. Create a feature branch (`feature/your-feature-name`)
-3. Commit and push changes
-4. Open a Pull Request
-
----
-
-## 🏆 Acknowledgments
-
-* [React](https://react.dev/)
-* [Vite](https://vitejs.dev/)
-* [Tailwind CSS](https://tailwindcss.com/)
-* [TypeScript](https://www.typescriptlang.org/)
+```bash
+npm run lint
+```
 
 ---
 
-## 📬 Contact
-
-**Developer:** [Keerthika Goli](https://www.linkedin.com/in/keerthika-goli-8115ab256)
-📧 **Email:** [keerthikagoli08@gmail.com](mailto:keerthikagoli08@gmail.com)
-
+## Project Structure (recommended)
 
 ```
+planora/
+├─ public/
+│  ├─ favicon.svg
+│  └─ logo.svg
+├─ src/
+│  ├─ assets/
+│  ├─ components/
+│  │  ├─ Calendar/
+│  │  │  ├─ CalendarContainer.tsx
+│  │  │  ├─ CalendarDay.tsx
+│  │  │  ├─ CalendarSidebar.tsx
+│  │  │  ├─ CalendarModal.tsx
+│  │  │  ├─ CalendarTooltip.tsx
+│  │  │  ├─ MiniCalendar.tsx
+│  │  │  ├─ CalendarAnimation.tsx
+│  │  │  └─ index.ts
+│  │  ├─ Layout/
+│  │  └─ SplashScreen.tsx
+│  ├─ constants/
+│  ├─ hooks/
+│  ├─ utils/
+│  ├─ types/
+│  ├─ App.tsx
+│  └─ main.tsx
+├─ index.html
+├─ tailwind.config.js
+├─ postcss.config.js
+├─ tsconfig.json
+├─ vite.config.ts
+└─ package.json
+```
+
+---
+
+## Data & Utilities
+
+- Events seeded by `INITIAL_EVENTS` (in `src/constants`).
+- Event type and utility functions (date helpers, conflict checks) in `src/utils`.
+- Events stored in local component state; easy to replace with API/localStorage.
+
+---
+
+## Author
+
+Keerthika Goli  
+LinkedIn: https://www.linkedin.com/in/keerthika-goli-8115ab256  
+Email: keerthikagoli08@gmail.com
+
+---
+
+## License
+
+MIT — see LICENSE file for details.
+
+---
