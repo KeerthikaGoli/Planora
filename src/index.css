@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Base reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  :root {
+    /* 🎨 LIGHT THEME */
+    --app-bg: #f8fafc; /* gray-50 */
+    --app-surface: #ffffff;
+    --app-card: #f1f5f9;
+    --app-text: #0f172a;
+    --app-muted: #475569;
+    /* Fresh accent palette */
+    --app-accent: #6366f1;       /* indigo-500 */
+    --app-accent-2: #06b6d4;     /* cyan-500 */
+    --app-accent-3: #a855f7;     /* violet-500 */
+
+    /* 🌙 DARK THEME */
+    --app-bg-dark: #0b1220;
+     --app-border: #e5e7eb;
+     --app-border-dark: #334155;
+    --app-surface-dark: #111827;
+    --app-card-dark: #1e293b;
+    --app-text-dark: #e2e8f0;
+    --app-muted-dark: #94a3b8;
+
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+   /* Automatically adapt theme (system) */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --app-bg: var(--app-bg-dark);
+      --app-surface: var(--app-surface-dark);
+      --app-card: var(--app-card-dark);
+      --app-text: var(--app-text-dark);
+      --app-muted: var(--app-muted-dark);
+       --app-border: var(--app-border-dark);
+    }
+  }
+
+   /* App-controlled theme via data-theme (overrides system when present) */
+   :root[data-theme="dark"] {
+     --app-bg: var(--app-bg-dark);
+     --app-surface: var(--app-surface-dark);
+     --app-card: var(--app-card-dark);
+     --app-text: var(--app-text-dark);
+     --app-muted: var(--app-muted-dark);
+     --app-border: var(--app-border-dark);
+   }
+
+  /* Full-bleed background */
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--app-bg);
+    color: var(--app-text);
+    overflow-x: hidden;
+  }
+
+  /* Remove any outer "white frame" or box shadow leaks */
+  #root > * {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+     background-color: var(--app-bg);
+  }
+
+  /* Subtle scrollbars for both modes */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.35);
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* 🌑 Dark mode card & panel classes */
+  .app-panel {
+    background-color: var(--app-surface);
+    color: var(--app-text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+     border-radius: 0.75rem;
+  }
+
+  .app-card {
+    background-color: var(--app-card);
+    color: var(--app-text);
+    border-radius: 0.75rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+   .border-app { border-color: var(--app-border) !important; }
+   .text-muted { color: var(--app-muted); }
+
+   /* Consistent elevation used across panels/cards */
+   .elevated {
+     box-shadow: 0 10px 25px rgba(2, 6, 23, 0.14), 0 4px 10px rgba(2, 6, 23, 0.08);
+   }
+
+   /* Accent heading for key labels like Planora/Quick View */
+   .heading-accent {
+     background: linear-gradient(90deg, var(--app-text) 0%, var(--app-muted) 100%);
+     -webkit-background-clip: text;
+     background-clip: text;
+     color: transparent;
+   }
+
+   .heading-underline {
+     position: relative;
+   }
+   .heading-underline::after {
+     content: "";
+     position: absolute;
+     left: 0;
+     bottom: -6px;
+     width: 48px;
+     height: 3px;
+     border-radius: 9999px;
+     background: var(--app-accent);
+   }
+
+  /* 🌈 Gradient header bar (for Planora header) */
+  .bg-dark-gradient {
+    background: linear-gradient(180deg, #111827 0%, #0b1220 100%);
+  }
+
+  /* Clean grid layout structure */
+  .app-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    height: 100vh;
+    background: var(--app-bg);
+  }
+
+  /* Smooth transitions when switching themes */
+  html, body, #root, .app-panel, .app-card {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+   /* THEME UTILITIES */
+   .text-accent { color: var(--app-accent) !important; }
+   .bg-accent { background-color: var(--app-accent) !important; }
+   .border-accent { border-color: var(--app-accent) !important; }
+   .ring-accent { box-shadow: 0 0 0 3px color-mix(in oklab, var(--app-accent) 35%, transparent); }
+
+   /* Header gradient (theme-aware, vibrant) */
+   .header-gradient {
+     background: radial-gradient(1200px 500px at -10% -20%, color-mix(in oklab, var(--app-accent) 25%, transparent) 0%, transparent 60%),
+                 radial-gradient(900px 400px at 110% -10%, color-mix(in oklab, var(--app-accent-2) 30%, transparent) 0%, transparent 70%),
+                 linear-gradient(180deg, color-mix(in oklab, var(--app-bg) 100%, black 0%) 0%, color-mix(in oklab, var(--app-bg) 92%, black 8%) 100%);
+   }
+
+   /* Accent buttons */
+   .btn-accent {
+     background: linear-gradient(135deg, var(--app-accent) 0%, var(--app-accent-3) 100%);
+     color: #ffffff;
+   }
+   .btn-accent:hover { filter: brightness(1.05); }
+   .btn-accent:active { transform: translateY(1px); }
+}

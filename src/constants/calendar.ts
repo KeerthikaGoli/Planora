@@ -1,0 +1,93 @@
+export const INITIAL_EVENTS = [
+  {
+    id: 1,
+    startTime: "09:00",
+    endTime: "10:30",
+    color: "#f59e0b",
+    title: "Daily Standup",
+    date: "2025-11-05",
+    description: "Team sync meeting to discuss progress and blockers",
+    category: "meeting"
+  },
+  {
+    id: 2,
+    startTime: "11:00",
+    endTime: "12:30",
+    color: "#ef4444",
+    title: "Weekly Catchup",
+    date: "2025-11-05",
+    description: "Weekly team catchup and planning session",
+    category: "meeting"
+  },
+  {
+    id: 3,
+    startTime: "10:00",
+    endTime: "11:30",
+    color: "#3b82f6",
+    title: "Team Planning",
+    date: "2025-11-08",
+    description: "Sprint planning for Q4",
+    category: "planning"
+  },
+  {
+    id: 4,
+    startTime: "14:00",
+    endTime: "15:00",
+    color: "#10b981",
+    title: "Client Meeting",
+    date: "2025-11-08",
+    description: "Product demo and feedback session",
+    category: "meeting"
+  },
+  {
+    id: 5,
+    startTime: "09:00",
+    endTime: "10:00",
+    color: "#8b5cf6",
+    title: "Design Review",
+    date: "2025-11-12",
+    description: "Review new UI mockups and wireframes",
+    category: "review"
+  },
+  {
+    id: 6,
+    startTime: "15:30",
+    endTime: "16:30",
+    color: "#ec4899",
+    title: "Sprint Retrospective",
+    date: "2025-11-15",
+    description: "Reflect on sprint and improvement areas",
+    category: "meeting"
+  },
+  {
+    id: 7,
+    startTime: "13:00",
+    endTime: "14:00",
+    color: "#06b6d4",
+    title: "Code Review Session",
+    date: "2025-11-04",
+    description: "Review pull requests and discuss best practices",
+    category: "review"
+  },
+  {
+    id: 8,
+    startTime: "16:00",
+    endTime: "17:00",
+    color: "#f97316",
+    title: "Product Demo",
+    date: "2025-11-04",
+    description: "Showcase new features to stakeholders",
+    category: "presentation"
+  }
+];
+
+// Minimalist color palette - muted and subtle
+export const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4', '#64748b', '#f97316'];
+
+export const MONTH_NAMES = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+export const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export const CATEGORIES = ['all', 'meeting', 'planning', 'review', 'presentation'];
