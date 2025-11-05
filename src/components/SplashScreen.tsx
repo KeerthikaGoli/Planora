@@ -23,16 +23,22 @@ const SplashScreen: React.FC = () => {
         pointerEvents: isVisible ? 'auto' : 'none',
       }}
     >
-      <div className="flex flex-col items-center justify-center text-center animate-fade-in space-y-3">
-        <Logo size="lg" className="animate-pulse" />
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 bg-clip-text text-transparent">
+      <div className="flex flex-col items-center justify-center animate-fade-in" style={{ gap: '1.5rem' }}>
+        {/* Logo - perfectly centered */}
+        <div className="flex justify-center items-center w-full">
+          <Logo size="lg" className="animate-pulse mx-auto" />
+        </div>
+        
+        {/* Planora Title - perfectly centered */}
+        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 bg-clip-text text-transparent text-center">
           Planora
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        
+        {/* Tagline - perfectly centered */}
+        <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 text-center">
           Manage your schedule efficiently
         </p>
       </div>
-
     </div>
   );
 };
