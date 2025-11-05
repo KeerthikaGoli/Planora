@@ -6,7 +6,7 @@ A modern, beautiful **fully responsive** calendar application built with React a
 
 ## 🌐 Live Demo
 
-🔗 **Live Application**: [https://adorable-daifuku-e8a303.netlify.app](https://adorable-daifuku-e8a303.netlify.app) *(Coming Soon)*
+🔗 **Live Application**: [https://adorable-daifuku-e8a303.netlify.app](https://adorable-daifuku-e8a303.netlify.app) 
 
 > ⚠️ **Note:** For the best viewing experience, open the app in **Light Mode** (disable Chrome’s default dark mode).  
 > Some browsers with forced dark themes may affect the visual appearance of the calendar UI.
