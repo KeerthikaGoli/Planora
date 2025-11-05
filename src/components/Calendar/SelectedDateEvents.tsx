@@ -23,12 +23,28 @@ const SelectedDateEvents: React.FC<SelectedDateEventsProps> = ({
   onEditEvent,
   onDeleteEvent
 }) => {
-  if (!selectedDate) return null;
+  // If no date is selected, show default prompt
+  if (!selectedDate) {
+    return (
+      <div className={`app-panel elevated border border-app p-4 md:p-6 animate-fade-in`}>
+        <div className={`text-center py-4 md:py-6 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className="text-base md:text-lg mb-4">Select a date to view or add events</p>
+          <button 
+            onClick={() => onAddEvent('')}
+            className={`px-6 py-2 rounded-md transition-all btn-accent text-white font-medium text-sm`}
+          >
+            <Plus className="w-4 h-4 inline mr-2" />
+            Add Event
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const dateKey = formatDateKey(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
 
   return (
-    <div className={`mt-6 app-panel elevated border border-app p-4 md:p-6 animate-fade-in`}>
+    <div className={`app-panel elevated border border-app p-4 md:p-6 animate-fade-in`}>
       <div className="flex items-center justify-between mb-4">
         <h3 className={`text-lg md:text-xl font-semibold ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>
           {MONTH_NAMES[selectedDate.getMonth()]} {selectedDate.getDate()}, {selectedDate.getFullYear()}
@@ -112,8 +128,8 @@ const SelectedDateEvents: React.FC<SelectedDateEventsProps> = ({
           })}
         </div>
       ) : (
-        <div className={`text-center py-8 sm:py-12 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-          <p className="text-lg mb-4">No events scheduled for this day</p>
+        <div className={`text-center py-4 md:py-8 sm:py-12 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+          <p className="text-base md:text-lg mb-3 md:mb-4">No events scheduled for this day</p>
           <button 
             onClick={() => onAddEvent(dateKey)}
             className={`px-6 py-2 rounded-md transition-all btn-accent text-white font-medium text-sm`}

@@ -9,25 +9,25 @@
   }
 
   :root {
-    /* 🎨 LIGHT THEME */
-    --app-bg: #f8fafc; /* gray-50 */
+    /* 🎨 LIGHT THEME - Clean, modern colors */
+    --app-bg: #fafbfc; /* Very light neutral */
     --app-surface: #ffffff;
-    --app-card: #f1f5f9;
-    --app-text: #0f172a;
-    --app-muted: #475569;
-    /* Fresh accent palette */
+    --app-card: #ffffff;
+    --app-text: #1e293b;
+    --app-muted: #64748b;
+    /* Refined accent palette */
     --app-accent: #6366f1;       /* indigo-500 */
-    --app-accent-2: #06b6d4;     /* cyan-500 */
+    --app-accent-2: #8b5cf6;     /* purple-500 */
     --app-accent-3: #a855f7;     /* violet-500 */
 
-    /* 🌙 DARK THEME */
-    --app-bg-dark: #0b1220;
-     --app-border: #e5e7eb;
-     --app-border-dark: #334155;
-    --app-surface-dark: #111827;
-    --app-card-dark: #1e293b;
-    --app-text-dark: #e2e8f0;
-    --app-muted-dark: #94a3b8;
+    /* 🌙 DARK THEME - Elegant dark */
+    --app-bg-dark: #0f172a; /* Deep navy */
+     --app-border: #e2e8f0;
+     --app-border-dark: #475569;
+    --app-surface-dark: #1e293b; /* Slate */
+    --app-card-dark: #334155; /* Lighter slate */
+    --app-text-dark: #f1f5f9;
+    --app-muted-dark: #cbd5e1;
 
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     font-synthesis: none;
@@ -58,7 +58,7 @@
      --app-border: var(--app-border-dark);
    }
 
-  /* Full-bleed background */
+  /* Full-bleed background - clean and simple */
   html, body, #root {
     height: 100%;
     width: 100%;
@@ -67,6 +67,26 @@
     background-color: var(--app-bg);
     color: var(--app-text);
     overflow-x: hidden;
+  }
+  
+  /* Subtle background texture - very minimal */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  #root {
+    position: relative;
+    z-index: 1;
   }
 
   /* Remove any outer "white frame" or box shadow leaks */
@@ -88,8 +108,9 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.35);
+    background: rgba(148, 163, 184, 0.3);
     border-radius: 8px;
+    transition: background 0.2s;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -118,9 +139,11 @@
    .border-app { border-color: var(--app-border) !important; }
    .text-muted { color: var(--app-muted); }
 
-   /* Consistent elevation used across panels/cards */
+   /* Consistent elevation used across panels/cards - subtle shadows */
    .elevated {
-     box-shadow: 0 10px 25px rgba(2, 6, 23, 0.14), 0 4px 10px rgba(2, 6, 23, 0.08);
+     box-shadow: 
+       0 4px 6px rgba(0, 0, 0, 0.05),
+       0 2px 4px rgba(0, 0, 0, 0.03);
    }
 
    /* Accent heading for key labels like Planora/Quick View */
@@ -129,6 +152,24 @@
      -webkit-background-clip: text;
      background-clip: text;
      color: transparent;
+   }
+   
+   /* Planora title gradient for dark mode - more visible */
+   .planora-gradient {
+     background: linear-gradient(135deg, #ffffff 0%, #d1d5db 25%, #ffffff 50%, #d1d5db 75%, #ffffff 100%);
+     -webkit-background-clip: text;
+     background-clip: text;
+     -webkit-text-fill-color: transparent;
+     color: transparent;
+     background-size: 200% 200%;
+     animation: gradient-shift 4s ease infinite;
+     font-weight: 700;
+     filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+   }
+   
+   @keyframes gradient-shift {
+     0%, 100% { background-position: 0% 50%; }
+     50% { background-position: 100% 50%; }
    }
 
    .heading-underline {
@@ -145,9 +186,9 @@
      background: var(--app-accent);
    }
 
-  /* 🌈 Gradient header bar (for Planora header) */
+  /* 🌈 Gradient header bar (for Planora header) - subtle */
   .bg-dark-gradient {
-    background: linear-gradient(180deg, #111827 0%, #0b1220 100%);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   }
 
   /* Clean grid layout structure */
@@ -176,11 +217,16 @@
                  linear-gradient(180deg, color-mix(in oklab, var(--app-bg) 100%, black 0%) 0%, color-mix(in oklab, var(--app-bg) 92%, black 8%) 100%);
    }
 
-   /* Accent buttons */
+   /* Accent buttons - clean gradient */
    .btn-accent {
      background: linear-gradient(135deg, var(--app-accent) 0%, var(--app-accent-3) 100%);
      color: #ffffff;
+     box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+     transition: all 0.2s ease;
    }
-   .btn-accent:hover { filter: brightness(1.05); }
+   .btn-accent:hover { 
+     filter: brightness(1.05);
+     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+   }
    .btn-accent:active { transform: translateY(1px); }
 }

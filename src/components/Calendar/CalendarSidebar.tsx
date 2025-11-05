@@ -44,9 +44,9 @@ const CalendarSidebar: React.FC<CalendarSidebarProps> = ({
 
         {/* Stats Cards */}
         <div className="space-y-3 mb-6">
-          <div className={`p-4 rounded-lg elevated ${darkMode ? 'bg-gradient-to-br from-accent to-gray-800' : 'bg-gray-900'} text-white`}>
+          <div className={`p-4 rounded-lg elevated ${darkMode ? 'btn-accent' : 'bg-gray-900'} text-white`}>
             <div className="text-3xl font-bold">{stats.total}</div>
-            <div className="text-sm opacity-80">Total Events</div>
+            <div className="text-sm opacity-80">Total Events in this Month</div>
           </div>
           
           {stats.byCategory.map((cat) => (

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+                                                                                                                                      import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { Plus } from 'lucide-react';
 import { INITIAL_EVENTS, COLORS, DAY_NAMES, CATEGORIES } from '../../constants/calendar';
 import { formatDateKey, daysInMonth, firstDayOfMonth, checkConflict } from '../../utils/calendarUtils';
@@ -9,6 +9,7 @@ import CalendarDay from './CalendarDay';
 import CalendarModal from './CalendarModal';
 import Notification from './Notification';
 import SelectedDateEvents from './SelectedDateEvents';
+import CalendarAnimation from './CalendarAnimation';
 
 const Calendar = () => {
   const today = new Date();
@@ -23,9 +24,11 @@ const Calendar = () => {
   const [events, setEvents] = useState<CalendarEvent[]>(INITIAL_EVENTS);
   const [showEventModal, setShowEventModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null);
-  const [showMiniCalendar, setShowMiniCalendar] = useState(true);
+  const [showMiniCalendar] = useState(true);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [showBottomAnimation, setShowBottomAnimation] = useState(true);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -74,6 +77,23 @@ const Calendar = () => {
   const handleDateDoubleClick = useCallback((dateKey: string) => {
     handleAddEvent(dateKey);
   }, [handleAddEvent]);
+
+  // Load events from JSON file on mount
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        const response = await fetch('/events.json');
+        if (response.ok) {
+          const jsonEvents = await response.json();
+          setEvents(jsonEvents);
+        }
+      } catch (error) {
+        console.log('Using default events from constants');
+        // Fallback to INITIAL_EVENTS if JSON file is not found
+      }
+    };
+    loadEvents();
+  }, []);
 
   // Platform detection
   useEffect(() => {
@@ -181,7 +201,7 @@ const Calendar = () => {
 
     const conflict = checkConflict(formData, events, editingEvent?.id || null);
     if (conflict) {
-      showNotification(`⚠️ Conflict with "${conflict.title}" (${conflict.startTime}-${conflict.endTime})`, 'error');
+      showNotification(`⚠️ Scheduling Conflict Detected!\n\nEvent: "${conflict.title}"\nTime: ${conflict.startTime} - ${conflict.endTime}\n\nPlease choose a different time slot.`, 'error');
       return;
     }
 
@@ -276,6 +296,39 @@ const Calendar = () => {
     rootEl.setAttribute('data-theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 
+  // Check if there's space at the bottom to show animation - only check once on mount
+  useEffect(() => {
+    const checkBottomSpace = () => {
+      if (!contentRef.current) return;
+      
+      const container = contentRef.current.parentElement;
+      if (!container) return;
+
+      // Check if content height is less than container's visible height
+      const contentHeight = contentRef.current.scrollHeight;
+      const containerHeight = container.clientHeight;
+      
+      // Show animation if content is shorter than viewport (at least 100px difference)
+      const hasSpace = contentHeight < containerHeight - 100;
+      
+      // Only set to true if there's space, never set to false (once shown, stays visible)
+      if (hasSpace) {
+        setShowBottomAnimation(true);
+      }
+    };
+
+    // Check after a delay to ensure DOM is fully rendered
+    const timeoutId = setTimeout(checkBottomSpace, 800);
+    
+    // Also check once more after longer delay to catch any late rendering
+    const timeoutId2 = setTimeout(checkBottomSpace, 1500);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearTimeout(timeoutId2);
+    };
+  }, []); // Only run once on mount
+
   return (
     <div className={`min-h-screen transition-colors duration-300`}>
       <style>{`
@@ -332,7 +385,7 @@ const Calendar = () => {
 
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
-          <div className="pt-1 pr-3 pb-4 pl-3 md:pr-6 md:pb-6 md:pl-6">
+          <div ref={contentRef} className="pt-2 pr-3 pb-0 pl-3 md:pt-5 md:pr-6 md:pb-6 md:pl-6">
             {/* Top Bar */}
             <TopBar
               darkMode={darkMode}
@@ -353,8 +406,8 @@ const Calendar = () => {
             />
 
             {/* Calendar Grid */}
-            <div className={`app-card elevated border border-app p-2 sm:p-3 md:p-5`}>
-              <div className="grid grid-cols-7 gap-1 sm:gap-2">
+            <div className={`app-card elevated border border-app p-2 sm:p-3 md:p-5 mb-3 md:mb-6 lg:mb-8`}>
+              <div className="grid grid-cols-7 gap-1 sm:gap-2 md:gap-4 lg:gap-6">
                 {DAY_NAMES.map(day => (
                   <div key={day} className={`text-center font-bold py-1.5 sm:py-2.5 text-[11px] sm:text-sm text-muted`}>
                     {day}
@@ -374,6 +427,13 @@ const Calendar = () => {
               onEditEvent={handleEditEvent}
               onDeleteEvent={handleDeleteEvent}
             />
+
+            {/* Calendar Animation - only shows when there's space at bottom */}
+            {showBottomAnimation && (
+              <div className="transition-opacity duration-300 ease-in-out opacity-100">
+                <CalendarAnimation darkMode={darkMode} />
+              </div>
+            )}
           </div>
         </div>
       </div>
